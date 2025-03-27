@@ -63,14 +63,14 @@ item,prefix,expected,within_category,between_category
 62,"Luke attacked the Tyranosaurus Rex with his three ""horns"". He couldn't pronounce it, but he liked to pretend to be a",triceratops,pterodactyl,leprechaun
 63,"In the story, the king needed medicine made from a magical golden horn. So a group set off in search of a",unicorn,leprechaun,triceratops
 64,"At the end of the rainbow, there's supposed to be a pot of gold. They say its guarded by a",leprechaun,unicorn,pterodactyl
-65,"With Robin at his side, he once again rid Gothem City of an evil villain. What would have happened, if it weren't for",Batman?,Superman?,Snoopy?
+65,"With Robin at his side, he once again rid Gothem City of an evil villain. What would have happened, if it weren't for",Batman,Superman,Snoopy
 66,"""Oh no!  The bad guys have gotten some Kryptonite!"" Jeff shouted. Lisa sighed, tired of her brother's fascination with",Superman,Batman,Garfield
 67,"Our cat is lazy and fat, and his favorite food is lasagna. Everyone comments on his resemblence to",Garfield,Snoopy,Batman
 68,"Charlie Brown is pathetic, but at least he has a cool pet. I don't know anyone who doesn't like",Snoopy,Garfield,Superman
 69,"Barb loved the feel of the waves on her feet, but she hated to walk barefoot. As a compromise, she usually wore a pair of",sandals,boots,shorts
 70,"By the end of the day, the hiker's feet were extremely cold and wet. It was the last time he would ever buy a cheap pair of",boots,sandals,jeans
 71,Everyone agreed that the stone-washed kind were out of style. But he continued to wear the same old pair of,jeans,shorts,boots
-72,"As the afternoon progressed, it became hotter and hotter. K",eith finally decided to put on a pair of shorts,eith finally decided to put on a pair of jeans,im finally decided to put on a pair of sandals
+72,"As the afternoon progressed, it became hotter and hotter. Keith finally decided to put on a pair of",shorts,jeans,sandals
 73,Pablo wanted to cut the lumber he had bought to make some shelves. He asked his neighbor if he could borrow her,saw,hammer,rake
 74,"Tina lined up where she thought the nail should go. When she was satisfied, she asked Bruce to hand her the",hammer,saw,shovel
 75,"The snow had piled up on the drive so high that they couldn't get the car out. When Albert woke up, his father handed him a",shovel,rake,saw
@@ -86,7 +86,7 @@ item,prefix,expected,within_category,between_category
 85,Carol vowed she would stop being obsessed about her weight. The first thing she did was to get rid of her,scale,thermometer,telescope
 86,She thought the little boy probably had a fever. She couldn't tell for sure though because she didn't have a,thermometer,scale,microscope
 87,The amateur astronomer thought it was the best Christmas gift ever. He couldn't wait to try out his new,telescope,microscope,scale
-88,I think it would have been amazing to be the first person to actually see bacteria. Do you remember who it was that invented the,microscope?,telescope?,thermometer?
+88,I think it would have been amazing to be the first person to actually see bacteria. Do you remember who it was that invented the,microscope,telescope,thermometer
 89,Diane suffered a bad concussion in the bike accident. I wish I had been able to convince her to borrow my,helmet,goggles,cane
 90,"Despite her protection, the chemist sustained an eye injury in the explosion. There seemed to have been some kind of defect in her",goggles,helmet,wheelchair
 91,The soldier sustained spinal injuries and became paralyzed. Now he always has to use a,wheelchair,cane,helmet

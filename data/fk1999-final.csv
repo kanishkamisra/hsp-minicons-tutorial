@@ -1,0 +1,133 @@
+item,prefix,expected,within_category,between_category,cloze_expected,constraint
+1,Ann wanted to treat her foreign guests to an all-American pie. She went out in the back yard and picked some,apples,oranges,carrots,0.818,high
+2,"Every morning, Jack makes himself a glass of fresh-squeezed juice. He keeps his refrigerator stocked with",oranges,apples,tomatoes,0.6779999999999999,low
+3,Sheila loves the taste of home-made spaghetti sauce. She decided to start growing her own,tomatoes,carrots,apples,0.782,low
+4,They told the little boy it was Bugs Bunny's favorite food. But he still didn't want to eat his,carrots,tomatoes,oranges,0.932,high
+5,Robert saw the hive and immediately froze. He was extremely afraid of,bees,spiders,rats,0.857,high
+6,"There were several webs built across the path. However, Sally didn't actually see any",spiders,bees,rabbits,0.818,high
+7,"With a flourish, the magician reached into his hat. To the delight of the children he pulled out, not one, but two",rabbits,rats,spiders,0.857,high
+8,"John liked his job in the psychology lab, but he worried about getting bitten. He didn't really feel comfortable working with the",rats,rabbits,bees,0.436,low
+9,"The gardener really impressed his wife on Valentine's Day. To surprise her, he had secretly grown some",roses,tulips,palms,0.7859999999999999,high
+10,The tourist in Holland stared in awe at the rows and rows of color. She wished she lived in a country where they grew,tulips,roses,pines,0.17,low
+11,The air smelled like a Christmas wreath and the ground was littered with needles. The land in this part of the country was just covered with,pines,palms,tulips,0.473,low
+12,They wanted to make the hotel look more like a tropical resort. So along the driveway they planted rows of,palms,pines,tulips,0.868,high
+13,"Jodie was one of the best pitchers on the team. That all changed, though, after the operation on her",arm,leg,heart,0.46399999999999997,low
+14,"Ever since they took the cast off, Matt has walked with a little bit of a limp. They say he may have to have surgery on his",leg,arm,lungs,0.364,low
+15,"As a child, Dave suffered from really bad asthma. Now he can't do much because of his weak",lungs,heart,leg,0.857,high
+16,Grandpa insists that his circulation is getting poorer. Yet the doctor says that there's nothing wrong with his,heart,lungs,arm,0.45799999999999996,low
+17,"The firefighters decided they wanted to have a mascot to live with them at the firehouse. Naturally, they decided it would have to be a",dalmatian,poodle,zebra,0.625,low
+18,"Muffie, old Mrs. Smith's pet, wears a bow on the puff of fur on its head. I don't know how anyone could want to own a",poodle,dalmatian,donkey,0.474,low
+19,"""I'm an animal like Eeyore!"" the child exclaimed. His mother wondered why he was pretending to be a",donkey,zebra,dalmatian,0.509,low
+20,"At the zoo, my sister asked me if they painted the black and white stripes on the animal. I explained to her that they were natural features of a",zebra,donkey,poodle,0.9490000000000001,high
+21,Everyone toasted the couple on fifty years of marriage. It was the first time some of the children there had ever tasted,champagne,beer,coffee,0.607,low
+22,"Carrie was disgusted with Paul's behavior at the fraternity party. He was so out of control, he kept spilling his",beer,champagne,milk,0.542,low
+23,Sam is really high-strung when he comes to work in the mornings. We asked him to try drinking a little less,coffee,milk,champagne,0.833,high
+24,Julie poured herself a huge bowl of cereal. Then she realized they were out of,milk,coffee,beer,1,high
+25,"The day before the wedding, the kitchen was just covered with frosting. Annette's sister was responsible for making the",cake,cookies,toast,0.727,low
+26,The little girl was happy that Santa Claus left nothing but crumbs on the plate. She decided he must have really enjoyed the,cookies,cake,bagel,0.915,high
+27,Chris moped around all morning when he discovered there was no cream cheese. He complained that without it he couldn't eat his,bagel,toast,cookies,0.875,high
+28,"He wanted to make his wife breakfast, but he burned piece after piece. I couldn't believe he was ruining even the",toast,bagel,cake,0.83,high
+29,I guess his girlfriend really encouraged him to get it pierced. But his father sure blew up when he came home wearing that,earring,necklace,lipstick,0.873,high
+30,She keeps twirling it around and around under her collar. Stephanie seems really happy that Dan gave her that,necklace,earring,mascara,0.78,low
+31,She wanted to make her eyelashes look really black and thick. So she asked to borrow her older friend's,mascara,lipstick,necklace,0.8,high
+32,"He complained that after she kissed him, he couldn't get the red color off his face. He finally just asked her to stop wearing that",lipstick,mascara,earring,0.909,high
+33,Eleanor offered to fix her visitor some coffee. Then she realized she didn't have a clean,cup,bowl,spoon,0.491,low
+34,"My aunt fixed my brother some cereal using her best china. Of course, the first thing he did was drop the",bowl,cup,knife,0.7120000000000001,low
+35,"At the dinner party, I wondered why my mother wasn't eating her soup. Then I noticed that she didn't have a",spoon,knife,cup,0.982,high
+36,"In the dorms, cutting your steak can be a huge struggle. They always give you such a poor quality",knife,spoon,bowl,0.627,low
+37,"Because of its teeth, it is one of the most deadly creatures in the ocean. Nevertheless, the scientist has spent her entire life studying the",shark,goldfish,shrimp,0.8909999999999999,high
+38,Its usually shiny orange color seemed dull as it swam around the little bowl. Claudia felt very sorry for the,goldfish,shark,crab,0.7070000000000001,low
+39,Dan didn't realize that you weren't actually supposed to eat the tails.  It was the first time he had ever ordered,shrimp,crab,shark,0.564,low
+40,He found it hanging onto his fishing line by one claw and snapping at him with the other. He couldn't believe he had caught a,crab,shrimp,goldfish,0.418,low
+41,"The hiker was startled by the sudden hissing sound. Without realizing it, he had nearly stepped on a small",snake,alligator,duck,0.782,low
+42,All you could see above the water were the creature's sinister eyes. Steve stood quietly watching the,alligator,snake,turkey,0.42100000000000004,low
+43,"When he picked it up, it began quacking and struggling uncontrollably. He was very careful about how he handled the baby",duck,turkey,alligator,0.9059999999999999,high
+44,Will was busy making paper wings for the Thanksgiving parade. He had been assigned to dress up as the,turkey,duck,snake,0.966,high
+45,"The massive creature blew a stream of water out of its blowhole. The children watched, fascinated by the",whale,dolphin,koala,0.9229999999999999,high
+46,"At the show, ""Sandy"" delighted the crowd by doing a series of flips, splashing everyone. Sandy was the park's star",dolphin,whale,kangaroo,0.649,low
+47,"While in the Australian outback, he spotted one hopping behind some brush. He brought home some great photos of the",kangaroo,koala,dolphin,0.981,high
+48,"The animal sat peacefully in the tree, eating eucalyptus leaves. Edith had journeyed far to see the",koala,kangaroo,whale,0.7759999999999999,low
+49,"She felt that she couldn't leave Venice without the experience. It might be a touristy thing to do, but she wanted to ride in a",gondola,ferry,helicopter,0.636,low
+50,Getting both himself and his car to work on the neighboring island was time-consuming. Every morning he drove for a few minutes and then boarded the,ferry,gondola,plane,0.534,low
+51,The patient was in critical condition and the ambulance wouldn't be fast enough. They decided they would have to use the,helicopter,plane,ferry,0.66,low
+52,"Amy was very anxious about travelling abroad for the first time. She felt surprisingly better, however, when she actually boarded the",plane,helicopter,gondola,0.5589999999999999,low
+53,"Maria said she would only eat the kind with small curds. She's not picky in general, but apparantly she's particular about her",cottage cheese,Swiss cheese,hamburgers,0.7170000000000001,low
+54,"Ignoring the cheddar, the mouse approached my bait and began nibbling around one of the holes. It definitely seemed to prefer the",swiss cheese,cottage cheese,steak,0.63,low
+55,"They had given up taking the children to any restaurant other than McDonald's. No matter where they went, the children would all order",hamburgers,steak,cottage cheese,0.47200000000000003,low
+56,"I like mine medium-rare while my husband likes his well-done. We both agree, however, on the fact that we love",steak,hamburgers,Swiss cheese,0.727,low
+57,"He journeyed to the African plains, hoping to get a photograph of the king of the beasts. Unfortunately, the whole time he was there he never saw a",lion,tiger,panda,0.8490000000000001,high
+58,George was hiking in India when he saw the orange and black striped animal leap out at him. He sustained serious injuries before he managed to kill the,tiger,lion,polar bear,0.764,low
+59,"Hitting the huge animal with a tranquilizer dart was difficult in the Arctic winds. Eventually, however, they were able to approach and tag the",polar bear,panda,lion,0.843,high
+60,Wendy wondered how they had managed to ship such a large animal all the way from China. She waited in line to see the newly acquired,panda,polar bear,tiger,0.431,low
+61,I'm always amused by the Flintstones' version of an airplane. Everybody piles onto a,pterodactyl,triceratops,unicorn,0.321,low
+62,"Luke attacked the Tyranosaurus Rex with his three ""horns"". He couldn't pronounce it, but he liked to pretend to be a",triceratops,pterodactyl,leprechaun,0.28600000000000003,low
+63,"In the story, the king needed medicine made from a magical golden horn. So a group set off in search of a",unicorn,leprechaun,triceratops,0.469,low
+64,"At the end of the rainbow, there's supposed to be a pot of gold. They say its guarded by a",leprechaun,unicorn,pterodactyl,0.9470000000000001,high
+65,"With Robin at his side, he once again rid Gothem City of an evil villain. What would have happened, if it weren't for",Batman,Superman,Snoopy,0.889,high
+66,"""Oh no!  The bad guys have gotten some Kryptonite!"" Jeff shouted. Lisa sighed, tired of her brother's fascination with",Superman,Batman,Garfield,0.759,low
+67,"Our cat is lazy and fat, and his favorite food is lasagna. Everyone comments on his resemblence to",Garfield,Snoopy,Batman,0.941,high
+68,"Charlie Brown is pathetic, but at least he has a cool pet. I don't know anyone who doesn't like",Snoopy,Garfield,Superman,0.877,high
+69,"Barb loved the feel of the waves on her feet, but she hated to walk barefoot. As a compromise, she usually wore a pair of",sandals,boots,shorts,0.784,high
+70,"By the end of the day, the hiker's feet were extremely cold and wet. It was the last time he would ever buy a cheap pair of",boots,sandals,jeans,0.763,low
+71,Everyone agreed that the stone-washed kind were out of style. But he continued to wear the same old pair of,jeans,shorts,boots,0.865,high
+72,"As the afternoon progressed, it became hotter and hotter. Keith finally decided to put on a pair of",shorts,jeans,sandals,0.78,low
+73,Pablo wanted to cut the lumber he had bought to make some shelves. He asked his neighbor if he could borrow her,saw,hammer,rake,0.769,low
+74,"Tina lined up where she thought the nail should go. When she was satisfied, she asked Bruce to hand her the",hammer,saw,shovel,0.915,high
+75,"The snow had piled up on the drive so high that they couldn't get the car out. When Albert woke up, his father handed him a",shovel,rake,saw,1,high
+76,The yard was completely covered with a thick layer of dead leaves. Erica decided it was time to get out the,rake,shovel,hammer,0.915,high
+77,The elderly American Indian was uncomfortable living in a modern home. He said he much preferred his,tepee,igloo,church,0.51,low
+78,"As part of a trip to Alaska, the tourist stayed overnight with some Eskimos. She was suprised at how warm it actually was in the",igloo,tepee,temple,0.915,high
+79,"When he studied abroad in Japan, Travis lived with host parents who were devout Buddhists. It was with them that he had his first experience visiting a",temple,church,tepee,0.596,low
+80,"While her brother was at war, the Christian woman spent her time praying. She often spent whole days in the nearby",church,temple,igloo,0.882,high
+81,Amy stood sleepily at the corner near her house. The worst part about getting to work was waiting for the,bus,train,van,0.941,high
+82,"The tracks up ahead looked old, and Emily was afraid they might get derailed. She always worried too much whenever she took the",train,bus,convertible,0.904,high
+83,The hatchback was way too small to transport all the children in the neighborhood carpool. The Lee's finally decided to buy a,van,convertible,bus,0.784,high
+84,"""If I put the top down, I can get a tan!"" Jerry boasted. Taffie scornfully pointed out that it wasn't the first time she'd seen a",convertible,van,train,0.746,low
+85,Carol vowed she would stop being obsessed about her weight. The first thing she did was to get rid of her,scale,thermometer,telescope,0.608,low
+86,She thought the little boy probably had a fever. She couldn't tell for sure though because she didn't have a,thermometer,scale,microscope,0.915,high
+87,The amateur astronomer thought it was the best Christmas gift ever. He couldn't wait to try out his new,telescope,microscope,scale,0.784,high
+88,I think it would have been amazing to be the first person to actually see bacteria. Do you remember who it was that invented the,microscope,telescope,thermometer,0.83,high
+89,Diane suffered a bad concussion in the bike accident. I wish I had been able to convince her to borrow my,helmet,goggles,cane,0.92,high
+90,"Despite her protection, the chemist sustained an eye injury in the explosion. There seemed to have been some kind of defect in her",goggles,helmet,wheelchair,0.491,low
+91,The soldier sustained spinal injuries and became paralyzed. Now he always has to use a,wheelchair,cane,helmet,0.86,high
+92,"Because of his bad leg, my grandfather used to struggle to walk. He does much better, though, now that he's using his",cane,wheelchair,goggles,0.8640000000000001,high
+93,He thought he would be eating chop suey and fortune cookies. It was a real eye-opener for him when he actually visited,China,Italy,Texas,0.863,high
+94,"She loved the opera, the wines, the art, the pasta. In fact, there was nothing she disliked about living in",Italy,China,Florida,0.6779999999999999,low
+95,"He owned several oil rigs and spent his days at the rodeo. Yes, life was good for him in",Texas,Florida,Italy,0.804,high
+96,"For Christmas, her grandparents sent her a big box of oranges. They'd done that every year since they moved to",Florida,Texas,China,0.8140000000000001,high
+97,"Capped with snow, it seemed ageless, majestic. People came from all around to see the",mountain,volcano,star,0.569,low
+98,Time after time the area had been devastated by the eruption. Yet people continued to build their houses on the,volcano,mountain,moon,0.8140000000000001,high
+99,"The Sun seems unique to those of us on Earth, but that it just because we are close to it. From somewhere else, it would seem like just another",star,moon,mountain,0.843,high
+100,The little girl wondered what caused the tides. She was surprised to find out it was the,moon,star,volcano,0.32799999999999996,low
+101,"Fred went to the pantry and got out the homemade jelly his grandmother had brought. Fifteen minutes later, however, he was still struggling to open the",jar,box,zipper,0.784,high
+102,"After they unpacked the new refrigerator, they let Billy have his fun. He played for days afterwards with the big",box,jar,button,0.746,low
+103,It seemed to catch everytime she opened or closed her backpack. She decided she would have to replace the,zipper,button,box,0.94,high
+104,"One fell off her blouse and got lost, and she didn't have any extras. She ended up searching all over town to find a matching",button,zipper,jar,0.909,high
+105,"It took amazingly little time for them to clear the land for the highway. They did most of it using one, huge",bulldozer,crane,tank,0.49,low
+106,The woman on the seventeenth floor had a piano delivered to her apartment yesterday. My son wanted to watch them operate the,crane,bulldozer,submarine,0.322,low
+107,"""Raise the periscope!!"" shouted Sam. My son was playing with his toy",submarine,tank,crane,0.449,low
+108,"The soldier shot desperately as it lumbered toward him, but its armor was too thick. There was no way he was going to be able to stop the",tank,submarine,bulldozer,0.254,low
+109,"""Checkmate,"" Rosaline announced with glee. She was getting to be really good at",chess,monopoly,baseball,0.94,high
+110,Justin put a second house on Park Place. He and his sister often spent hours playing,monopoly,chess,football,0.932,high
+111,He caught the pass and scored another touchdown. There was nothing he enjoyed more than a good game of,football,baseball,monopoly,1,high
+112,Rich couldn't count the number of Yankees games he had seen with his father. They both shared a lifelong interest in,baseball,football,chess,0.983,high
+113,Kelly was furious when she lost the tennis tournament. She got so upset that she actually broke her,racket,bat,doll,0.98,high
+114,"With it, Scott had hit homerun after homerun. So he was inconsolable when he lost his favorite",bat,racket,rattle,0.915,high
+115,It seemed to fascinate the baby that he could shake it and make a lot of noise. His parents were kind of sorry they had decided to give him a,rattle,doll,bat,0.9,high
+116,The little girl spent hours feeding it and changing its diapers. Her most prized possession seemed to be that,doll,rattle,racket,0.78,low
+117,Peter sat gaping at the centerfold. He asked his friend if he could borrow the,magazine,book,pencil,0.84,high
+118,The package was rectangular and heavy and suspiciously academic. Bianca was disappointed that her uncle was giving her a,book,magazine,pen,0.608,low
+119,Don looked dismayed when he found out the test was Scan-tron. He hadn't thought to bring a,pencil,pen,book,1,high
+120,The first one she pulled out was out of ink. So she opened her bag again and looked for another,pen,pencil,magazine,0.9490000000000001,high
+121,"She had begun knitting well before Christmas, and now she had only the sleeves left. She guessed that her mother would really like the",sweater,tee-shirt,brush,0.96,high
+122,Bruce pulled the Metallica one out of the bottom of his drawer. He was down to his last,tee-shirt,sweater,razor,0.49200000000000005,low
+123,The stubble on his chin made him look really unkempt. He regretted forgetting to pack a,razor,brush,sweater,0.82,high
+124,"Cindy wanted to touch up her hair, but she hadn't brought her purse into the bathroom. She asked her friend if she could borrow a",brush,razor,tee-shirt,0.672,low
+125,The new surgeon decided it was time to start cutting. He took a deep breath and picked up the,scalpel,needle,scissors,0.68,low
+126,The little girl screamed when the doctor tried to give her a shot. Her antics caused him to actually drop the,needle,scalpel,stapler,0.7879999999999999,high
+127,The TA was frustrated when the student handed her the ten loose sheets of his paper. She asked him to please go find the,stapler,scissors,needle,0.755,low
+128,The child told her father she had cut herself making a paper snowflake. He told her that she should be more careful handling the,scissors,tapler,calpel,0.948,high
+129,"Exploring a little cave near his house, Jacob suddenly found himself in the dark. Something seemed to have gone wrong with his",flashlight,chandelier,toaster,0.765,low
+130,"The gold and crystals scattered the light around the diningroom, and Walter stared up in awe. He wished that he owned a",chandelier,flashlight,blender,0.345,low
+131,"He put the icecream and the milk in for his shake, but he forgot to put on the cover. Disaster struck when he turned on the",blender,toaster,flashlight,0.96,high
+132,"The slices of bread never popped up, and they burned to a crisp every time. She sighed, realizing she would have to buy a new",toaster,blender,chandelier,0.961,high
