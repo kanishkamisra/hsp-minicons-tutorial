@@ -34,12 +34,20 @@ def main(args):
         dist = lm.next_word_distribution(prefix, bos_token=bos_token).detach().cpu()
         entropies = (-1.0 * (dist * dist.exp()).sum(1)).tolist()
 
-        expected_scores = lm.conditional_score(prefix, expected, bos_token=bos_token)
+        expected_scores = lm.conditional_score(
+            prefix, expected, bos_token=bos_token, reduction=lambda x: x.sum().item()
+        )
         within_scores = lm.conditional_score(
-            prefix, within_category, bos_token=bos_token
+            prefix,
+            within_category,
+            bos_token=bos_token,
+            reduction=lambda x: x.sum().item(),
         )
         between_scores = lm.conditional_score(
-            prefix, between_category, bos_token=bos_token
+            prefix,
+            between_category,
+            bos_token=bos_token,
+            reduction=lambda x: x.sum().item(),
         )
 
         for i, entropy, e, w, b in zip(
