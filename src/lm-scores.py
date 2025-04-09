@@ -17,12 +17,9 @@ def main(args):
     else:
         bos_token = False
 
+    lm = scorer.IncrementalLMScorer(model, device=args.device)
 
-    if not args.mamba:
-        lm = scorer.IncrementalLMScorer(model, device=args.device)
-    else:
-        # lm = scorer.MambaScorer(model, device=args.device)
-        lm = scorer.IncrementalLMScorer(model, device=args.device)
+    parameters = lm.model.num_parameters()
 
     stimuli = utils.read_csv_dict("data/fk1999-final.csv")
     batches = DataLoader(stimuli, batch_size=args.batch_size)
@@ -58,7 +55,7 @@ def main(args):
         for i, entropy, e, w, b in zip(
             idx, entropies, expected_scores, within_scores, between_scores
         ):
-            results.append((i, entropy, e, w, b))
+            results.append((i, entropy, e, w, b, parameters))
 
     pathlib.Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -72,6 +69,7 @@ def main(args):
             "expected_logprob",
             "within_logprob",
             "between_logprob",
+            "parameters",
         ],
     )
 
@@ -82,7 +80,6 @@ if __name__ == "__main__":
     parser.add_argument("--device", type=str, default="cpu")
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--output_dir", type=str, default="results/fk1999/")
-    parser.add_argument("--mamba", action="store_true")
 
     args = parser.parse_args()
 
