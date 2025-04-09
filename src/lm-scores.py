@@ -17,7 +17,12 @@ def main(args):
     else:
         bos_token = False
 
-    lm = scorer.IncrementalLMScorer(model, device=args.device)
+
+    if not args.mamba:
+        lm = scorer.IncrementalLMScorer(model, device=args.device)
+    else:
+        # lm = scorer.MambaScorer(model, device=args.device)
+        lm = scorer.IncrementalLMScorer(model, device=args.device)
 
     stimuli = utils.read_csv_dict("data/fk1999-final.csv")
     batches = DataLoader(stimuli, batch_size=args.batch_size)
@@ -77,6 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--device", type=str, default="cpu")
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--output_dir", type=str, default="results/fk1999/")
+    parser.add_argument("--mamba", action="store_true")
 
     args = parser.parse_args()
 
