@@ -1,0 +1,111 @@
+---
+title: "Analysing language models' behavior on Federmeier and Kutas (1999)"
+description: |
+  HSP virtual speaker series.
+author:
+  - name: Kanishka Misra 
+    url: https://kanishka.website
+    affiliation: Toyota Technological Institute at Chicago
+    affiliation_url: https://ttic.edu
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Importing libraries
+
+```{r, echo=TRUE}
+library(tidyverse)
+library(scales)
+library(fs)
+library(gt) # good tables
+library(reactable)
+```
+
+## Model meta data
+
+Useful for plotting and grouping by model families!
+
+```{r, echo=TRUE}
+models <- c("opt-125m", "opt-350m", "opt-1.3b", "opt-2.7b", "opt-6.7b", 
+            "pythia-70m", "pythia-160m", "pythia-410m", "pythia-1b", "pythia-1.4b", 
+            "pythia-2.8b", "pythia-6.9b", "pythia-12b",
+            "rwkv4-169m", "rwkv4-430m", "rwkv4-1b", "rwkv4-3b", "rwkv4-7b",
+            "mamba-130m", "mamba-370m", "mamba-790m", "mamba-1.4b", "mamba-2.8b")
+model_family <- c(rep("opt", 5), rep("pythia", 8), rep("rwkv", 5), rep("mamba", 5))
+
+model_meta <- tibble(
+  model = factor(models, levels = models),
+  family = factor(model_family, levels = c("opt", "pythia", "rwkv", "mamba"))
+)
+```
+
+## The stimuli
+
+```{r, echo=TRUE}
+# Federmeier and Kutas' stimuli
+fk_stimuli <- read_csv("data/fk1999-final.csv")
+```
+
+The Federmeier and Kutas (1999) dataset consists of the following columns:
+
+* **item:** item id (total 132)
+* **prefix:** the two-sentence stimulus shown to participants, the second sentence is incomplete, in the sense that it is missing the last word.
+* **expected:** word that is the best completion (i.e., most expected) to the prefix.
+* **within:** word that is not a highly expected completion but belongs to the same taxonomic category as **expected**, i.e., it is a *within*-category violation.
+* **between:** word that is not a highly expected completion but belongs to a relatively *different* taxonomic category as **expected**, i.e., shares far fewer features with it than does the **within** word.
+* **cloze_expected:** the cloze probability for the expected continuation, which is measured to determine the amount of contextual constraint placed by the prefix stimulus.
+* **constraint:** high or low, based on a median split on **cloze_expected**
+
+P.S.: I've hidden the code I used to show this table, please check out the source code if you are interested.
+
+```{r, layout="l-body-outset"}
+reactable(
+  fk_stimuli, resizable = TRUE, 
+  defaultPageSize = 4, 
+  columns=list(
+    item=colDef(minWidth = 90),
+    prefix=colDef(minWidth = 200),
+    expected = colDef(minWidth=90),
+    within_category=colDef(minWidth = 90,name="within"),
+    between_category=colDef(minWidth = 90,name="between"),
+    cloze_expected=colDef(name="cloze (expected)")
+  ),
+  sortable = TRUE
+)
+```
+
+
+## Loading in model results
+
+Had do a bit of pre-processing to make sure LM names look pretty...
+
+```{r, echo=TRUE}
+
+results <- dir_ls("results/fk1999/", regexp = "*.csv") %>%
+  map_df(read_csv, .id = "model") %>%
+  mutate(
+    model = str_extract(model, "(?<=results/fk1999/)(.*)(?=\\.csv)"),
+    model = str_remove(model, "facebook__|EleutherAI__|RWKV__|state-spaces__"),
+    model = str_remove(model, "-deduped|-pile|-hf"),
+    model = str_replace(model, "-4-", "4-"),
+    model = str_replace(model, "1b5", "1b"),
+    model = factor(model, levels = models)
+  ) %>%
+  inner_join(fk_stimuli %>% select(item, cloze_expected, constraint))
+```
+
+
+
+
+Distill is a publication format for scientific and technical writing, native to the web. 
+
+Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
+
+
+
+
+
