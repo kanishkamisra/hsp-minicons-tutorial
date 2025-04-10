@@ -8,12 +8,15 @@ author:
     affiliation: Toyota Technological Institute at Chicago
     affiliation_url: https://ttic.edu
 date: "`r Sys.Date()`"
-output: distill::distill_article
+output: 
+  distill::distill_article:
+    css: style.css
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
 
 ## Importing libraries
 
@@ -21,7 +24,6 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(scales)
 library(fs)
-library(gt) # good tables
 library(reactable)
 ```
 
@@ -99,7 +101,15 @@ results <- dir_ls("results/fk1999/", regexp = "*.csv") %>%
 ```
 
 
+### How often do the tested LMs show compatibility with the findings of F&K (1999)?
 
+Federmeier and Kutas (1999) found the N400 patterns to show some sensitivity to the completions which were not expected, but shared a semantic category with the actual expected completion. In their findings, the **expected** continuation did not elicit an N400 effect, while the **between** continuation did, in line with what was known about the N400. At the same time, while the **within** continuation---which shared many semantic features with the expected word---also elicited an N400 in participants, its amplitude was systematically moderate compared that of **between**. This suggested that the N400.
+
+Insofar as the surprisal tracks similar information as the N400, we should see the following pattern emerge:
+
+$$
+\texttt{surprisal}(expected) < \texttt{surprisal}(within) < \texttt{surprisal}(between)
+$$
 
 Distill is a publication format for scientific and technical writing, native to the web. 
 
