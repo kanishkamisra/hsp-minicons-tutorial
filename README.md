@@ -21,6 +21,8 @@ Check out this [readme file](./data/README.md) to see the very brief summary of 
 
 Relevant files: `src/preprocess-f&k-1999.ipynb` and `analysis/join-fk1999.R`.
 
+The cleaned stimuli can be found in `data/fk1999-final.csv` or [this link](data/fk1999-final.csv).
+
 ## Demo Notebooks and Code
 
 * [Contextualized Word Embeddings playground using](src/MLM-CWE.ipynb) `minicons.cwe`
