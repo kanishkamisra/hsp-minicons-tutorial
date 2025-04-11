@@ -1,6 +1,7 @@
 library(tidyverse)
 library(lmerTest)
 library(scales)
+library(emmeans)
 
 models <- c("opt-125m", "opt-350m", "opt-1.3b", "opt-2.7b", "opt-6.7b", 
             "pythia-70m", "pythia-160m", "pythia-410m", "pythia-1b", "pythia-1.4b", 
@@ -63,8 +64,8 @@ results %>%
   # geom_linerange(aes(ymin = entropy-cl, ymax = entropy+cl), position = position_dodge(0.5))
 
 
-full <- lmer(-within_logprob ~ constraint + (1 + constraint | model), data = results, REML = FALSE)
-reduced <- lmer(-within_logprob ~ (1 + constraint | model), data = results, REML = FALSE)
+full <- lmer(within_surprisal ~ constraint + (1 + constraint | model), data = results, REML = FALSE)
+reduced <- lmer(within_surprisal ~ (1 + constraint | model), data = results, REML = FALSE)
 anova(full, reduced)
 
 summary(full)
@@ -79,25 +80,89 @@ results %>%
 full <- lm(-within_logprob ~ constraint, data = results %>% filter(model == "pythia-410m"))
 summary(full)
 
-results %>%
-  pivot_longer(expected_logprob:between_logprob, names_to = "completion", values_to = "logprob") %>%
+results_wider <- results %>%
+  pivot_longer(expected_surprisal:between_surprisal, names_to = "completion", values_to = "surprisal") %>%
   mutate(
-    completion = str_remove(completion, "_logprob"),
-    logprob = -1 * logprob,
+    completion = str_remove(completion, "_surprisal"),
     completion = factor(completion, levels = c("expected", "within", "between"))
-  ) %>%
-  group_by(model, constraint, completion) %>%
+  )
+
+results_wider %>%
+  group_by(model, completion) %>%
   summarize(
-    ste = 1.96 * plotrix::std.error(logprob),
-    logprob = mean(logprob)
+    n = n(),
+    sd = sd(surprisal),
+    conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+    surprisal = mean(surprisal)
   ) %>%
-  ggplot(aes(constraint, logprob, color = completion)) +
-  geom_point(size = 2.5) +
-  geom_linerange(aes(ymin=logprob-ste, ymax = logprob+ste)) +
+  ggplot(aes(completion, surprisal, color = completion, fill = completion)) +
+  # geom_point(size = 2) +
+  geom_col(width = 0.4) +
+  geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf), color = "black") +
+  scale_color_manual(values = c("#6aa84f", "#3d85c6", "#cc4125"), aesthetics = c("color", "fill")) +
   facet_wrap(~model) +
+  theme_bw(base_size = 16, base_family = "Times") +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank()
+  ) +
   labs(
     y = "Surprisal",
-    x = "Constraint"
+    x = "Completion",
+  )
+
+results_wider %>%
+  group_by(model, completion) %>%
+  summarize(
+    n = n(),
+    sd = sd(surprisal),
+    conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+    surprisal = mean(surprisal)
+  ) %>%
+  ungroup() %>%
+  inner_join(model_meta) %>%
+  ggplot(aes(model, surprisal, color = completion, fill = completion)) +
+  geom_col(position = position_dodge(0.5), width = 0.4) +
+  geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf), color = "black", position = position_dodge(0.5)) +
+  scale_color_brewer(palette = "Dark2", aesthetics = c("color", "fill")) +
+  facet_wrap(~family, ncol = 1, scales="free") +
+  theme_bw(base_size = 16, base_family = "Times") +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.text = element_text(color = "black")
+  ) +
+  labs(
+    y = "Surprisal",
+    x = "Completion",
+  )
+
+
+results_wider %>%
+  group_by(model, constraint, completion) %>%
+  summarize(
+    n = n(),
+    sd = sd(surprisal),
+    conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+    surprisal = mean(surprisal)
+  ) %>%
+  ungroup() %>%
+  inner_join(model_meta) %>%
+  ggplot(aes(model, surprisal, color = completion, group = interaction(model, completion))) +
+  geom_point(size = 2, position = position_dodge(0.5)) +
+  geom_line() +
+  geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf), position = position_dodge(0.5)) +
+  scale_color_manual(values = c("#6aa84f", "#3d85c6", "#cc4125")) +
+  facet_wrap(~family, ncol = 1, scales="free") +
+  theme_bw(base_size = 16, base_family = "Times") +
+  theme(
+    legend.position = "top",
+    panel.grid = element_blank()
+  ) +
+  labs(
+    y = "Surprisal",
+    x = "Constraint",
+    color = "Completion"
   )
 
 ## conditions
@@ -105,7 +170,7 @@ results %>%
 results %>%
   group_by(model, constraint) %>%
   summarize(
-    accuracy = mean((expected_logprob > within_logprob) & (within_logprob > between_logprob))
+    accuracy = mean((expected_surprisal < within_surprisal) & (within_surprisal < between_surprisal))
     # accuracy = mean((expected_logprob > within_logprob))
     # accuracy = mean(within_logprob > between_logprob)
   ) %>%
@@ -118,9 +183,9 @@ results %>%
 results %>%
   group_by(model) %>%
   summarize(
-    overall = mean((expected_logprob > within_logprob) & (within_logprob > between_logprob))
-    # accuracy = mean((expected_logprob > within_logprob))
-    # accuracy = mean(within_logprob > between_logprob)
+    overall = mean((expected_surprisal < within_surprisal) & (within_surprisal < between_surprisal))
+    # overall = mean((expected_surprisal < within_surprisal))
+    # overall = mean(within_surprisal < between_surprisal)
   ) %>%
   ungroup() %>%
   inner_join(model_meta) %>%
@@ -139,14 +204,28 @@ results %>%
   ) +
   labs(
     x = "Parameters",
-    y = "Expected Pattern Observed",
+    y = "Compatibility with F&K (1999)",
     color = "Family",
     fill = "Family",
     shape = "Family",
-  ) +
-  annotation_logticks()
+  )
 
 # 554 497
+
+longer <- results %>%
+  pivot_longer(expected_surprisal:between_surprisal, names_to = "completion", values_to = "surprisal") %>%
+  mutate(
+    completion = str_remove(completion, "_surprisal"),
+    completion = factor(completion, levels = c("expected", "within", "between"))
+  )
+
+full <- lmer(surprisal ~ completion * constraint + (1 + completion * constraint || model) + (1 | item), data = longer)
+
+summary(full)
+emmip(full, completion ~ constraint, CIs = TRUE)
+
+contrast(full,  ~ completion * constraint, CIs = TRUE)
+# contrast(full, "consec", simple = "each", combine = TRUE, adjust = "mvt")
 
 results %>%
   pivot_longer(expected_logprob:between_logprob, names_to = "completion", values_to = "logprob") %>%

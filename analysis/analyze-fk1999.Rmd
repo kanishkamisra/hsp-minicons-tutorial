@@ -17,7 +17,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
 ## Importing libraries
 
 ```{r, echo=TRUE}
@@ -37,11 +36,11 @@ models <- c("opt-125m", "opt-350m", "opt-1.3b", "opt-2.7b", "opt-6.7b",
             "pythia-2.8b", "pythia-6.9b", "pythia-12b",
             "rwkv4-169m", "rwkv4-430m", "rwkv4-1b", "rwkv4-3b", "rwkv4-7b",
             "mamba-130m", "mamba-370m", "mamba-790m", "mamba-1.4b", "mamba-2.8b")
-model_family <- c(rep("opt", 5), rep("pythia", 8), rep("rwkv", 5), rep("mamba", 5))
+model_family <- c(rep("OPT", 5), rep("Pythia", 8), rep("RWKV", 5), rep("Mamba", 5))
 
 model_meta <- tibble(
   model = factor(models, levels = models),
-  family = factor(model_family, levels = c("opt", "pythia", "rwkv", "mamba"))
+  family = factor(model_family, levels = c("OPT", "Pythia", "RWKV", "Mamba"))
 )
 ```
 
@@ -54,13 +53,13 @@ fk_stimuli <- read_csv("data/fk1999-final.csv")
 
 The Federmeier and Kutas (1999) dataset consists of the following columns:
 
-* **item:** item id (total 132)
-* **prefix:** the two-sentence stimulus shown to participants, the second sentence is incomplete, in the sense that it is missing the last word.
-* **expected:** word that is the best completion (i.e., most expected) to the prefix.
-* **within:** word that is not a highly expected completion but belongs to the same taxonomic category as **expected**, i.e., it is a *within*-category violation.
-* **between:** word that is not a highly expected completion but belongs to a relatively *different* taxonomic category as **expected**, i.e., shares far fewer features with it than does the **within** word.
-* **cloze_expected:** the cloze probability for the expected continuation, which is measured to determine the amount of contextual constraint placed by the prefix stimulus.
-* **constraint:** high or low, based on a median split on **cloze_expected**
+-   **item:** item id (total 132)
+-   **prefix:** the two-sentence stimulus shown to participants, the second sentence is incomplete, in the sense that it is missing the last word.
+-   **expected:** word that is the best completion (i.e., most expected) to the prefix.
+-   **within:** word that is not a highly expected completion but belongs to the same taxonomic category as **expected**, i.e., it is a *within*-category violation.
+-   **between:** word that is not a highly expected completion but belongs to a relatively *different* taxonomic category as **expected**, i.e., shares far fewer features with it than does the **within** word.
+-   **cloze_expected:** the cloze probability for the expected continuation, which is measured to determine the amount of contextual constraint placed by the prefix stimulus.
+-   **constraint:** high or low, based on a median split on **cloze_expected**
 
 P.S.: I've hidden the code I used to show this table, please check out the source code if you are interested.
 
@@ -80,7 +79,6 @@ reactable(
 )
 ```
 
-
 ## Loading in model results
 
 Had do a bit of pre-processing to make sure LM names look pretty...
@@ -98,8 +96,10 @@ results <- dir_ls("results/fk1999/", regexp = "*.csv") %>%
     model = factor(model, levels = models)
   ) %>%
   inner_join(fk_stimuli %>% select(item, cloze_expected, constraint))
-```
 
+model_meta <- model_meta %>%
+  inner_join(results %>% distinct(model, parameters))
+```
 
 ### How often do the tested LMs show compatibility with the findings of F&K (1999)?
 
@@ -111,11 +111,144 @@ $$
 \texttt{surprisal}(expected) < \texttt{surprisal}(within) < \texttt{surprisal}(between)
 $$
 
-Distill is a publication format for scientific and technical writing, native to the web. 
+### How often is this pattern observed?
+
+To answer this question, we will measure the percentage of time the above condition holds across all our models. Below I show a plot with these results, with the x axis indicating the total number of parameters, and the y axis indicating the percentage of time the pattern holds.
+
+Since the condition involves 2 comparisons that must simultaneously be true, chance performance is equivalent to two coin flips -- i.e., $0.5^2$ or $0.25$. This will be indicated with a *dashed* line in the plot.
+
+```{r, fig.height=4.97, fig.width=5.54}
+results %>%
+  group_by(model) %>%
+  summarize(
+    overall = mean((expected_surprisal < within_surprisal) & (within_surprisal < between_surprisal))
+    # overall = mean((expected_surprisal < within_surprisal))
+    # overall = mean(within_surprisal < between_surprisal)
+  ) %>%
+  ungroup() %>%
+  inner_join(model_meta) %>%
+  ggplot(aes(parameters, overall, color = family, shape=family, fill=family)) +
+  geom_point(size=3, alpha = 0.9) +
+  geom_hline(yintercept = 0.25, linetype="dashed") +
+  scale_x_log10(labels = label_log(digits = 2)) +
+  scale_y_continuous(limits = c(0.2,0.8), labels = percent_format()) +
+  # scale_color_brewer(palette = "Dark2", aesthetics = c("color", "fill")) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9", "#CC79A7", "#000000"), aesthetics = c("color", "fill")) +
+  scale_shape_manual(values=c(21, 22, 23, 24)) +
+  theme_bw(base_size=18, base_family = "Times") +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_text(color = "black"),
+    legend.position = "top"
+  ) +
+  labs(
+    x = "Parameters",
+    y = "Compatibility with F&K (1999)",
+    color = "Family",
+    fill = "Family",
+    shape = "Family",
+  )
+```
+
+
+We can also look at it from the perspective of average surprisal values across completion types, across models
+
+```{r, fig.height=10.24, fig.width=8.83}
+results_wider <- results %>%
+  pivot_longer(expected_surprisal:between_surprisal, names_to = "completion", values_to = "surprisal") %>%
+  mutate(
+    completion = str_remove(completion, "_surprisal"),
+    completion = factor(completion, levels = c("expected", "within", "between"))
+  )
+# 
+# results_wider %>%
+#   group_by(model, completion) %>%
+#   summarize(
+#     n = n(),
+#     sd = sd(surprisal),
+#     conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+#     surprisal = mean(surprisal)
+#   ) %>%
+#   ggplot(aes(completion, surprisal, color = completion, fill = completion)) +
+#   # geom_point(size = 2) +
+#   geom_col(width = 0.4) +
+#   geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf), color = "black") +
+#   scale_color_manual(values = c("#6aa84f", "#3d85c6", "#cc4125"), aesthetics = c("color", "fill")) +
+#   facet_wrap(~model) +
+#   theme_bw(base_size = 16, base_family = "Times") +
+#   theme(
+#     legend.position = "none",
+#     panel.grid = element_blank()
+#   ) +
+#   labs(
+#     y = "Surprisal",
+#     x = "Completion",
+#   )
+
+results_wider %>%
+  group_by(model, completion) %>%
+  summarize(
+    n = n(),
+    sd = sd(surprisal),
+    conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+    surprisal = mean(surprisal)
+  ) %>%
+  ungroup() %>%
+  inner_join(model_meta) %>%
+  ggplot(aes(model, surprisal, color = completion, fill = completion)) +
+  geom_col(position = position_dodge(0.5), width = 0.4) +
+  geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf), color = "black", position = position_dodge(0.5)) +
+  scale_color_brewer(palette = "Dark2", aesthetics = c("color", "fill")) +
+  facet_wrap(~family, ncol = 1, scales="free") +
+  theme_bw(base_size = 16, base_family = "Times") +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.text = element_text(color = "black")
+  ) +
+  labs(
+    y = "Surprisal",
+    x = "Completion",
+  )
+
+```
+
+
+### Does surprisal show analogous sensitivity to constraint as the N400?
+
+Federmeier and Kutas (1999) found the N400 amplitude of the within-category violation to be greater for low-constraint contexts than for high-constraint contexts; while those for expected and between-category violations were not found to be significantly different. Insofar as LM surprisals qualitatively mimic N400 patterns, we should find similar trends. That is, the surprisal of the within category violations in the low constraint contexts should be greater than that in high constraint contexts, while no effect should be found for surprisals for expected and betwee-category violations.
+
+While this should ideally be resolved by doing a linear mixed effects model comparison, with random effects for item (prefix) and model and an interaction term involving constraint (high vs. low) and completion (expected, within, between), we will just look at it via plots:
+
+```{r, fig.height=10.76, fig.width=10.51}
+results_wider %>%
+  group_by(model, constraint, completion) %>%
+  summarize(
+    n = n(),
+    sd = sd(surprisal),
+    conf = qt(1 - (0.05/2), n - 1) * sd/sqrt(n),
+    surprisal = mean(surprisal)
+  ) %>%
+  ggplot(aes(constraint, surprisal, color = completion, group = completion)) +
+  geom_point(size = 2) +
+  geom_line() +
+  geom_linerange(aes(ymin=surprisal-conf, ymax = surprisal+conf)) +
+  # scale_color_manual(values = c("#6aa84f", "#3d85c6", "#cc4125")) +
+  scale_color_brewer(palette = "Dark2") +
+  facet_wrap(~model) +
+  theme_bw(base_size = 16, base_family = "Times") +
+  theme(
+    legend.position = "top",
+    panel.grid = element_blank()
+  ) +
+  labs(
+    y = "Surprisal",
+    x = "Constraint",
+    color = "Completion"
+  )
+```
+
+
+Distill is a publication format for scientific and technical writing, native to the web.
 
 Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
-
-
-
-
-
