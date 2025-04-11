@@ -72,9 +72,9 @@ def main(args):
         header=[
             "item",
             "entropy",
-            "expected_logprob",
-            "within_logprob",
-            "between_logprob",
+            "expected_surprisal",
+            "within_surprisal",
+            "between_surprisal",
             "parameters",
         ],
     )
