@@ -37,19 +37,25 @@ def main(args):
         entropies = (-1.0 * (dist * dist.exp()).sum(1)).tolist()
 
         expected_scores = lm.conditional_score(
-            prefix, expected, bos_token=bos_token, reduction=lambda x: x.sum().item()
+            prefix,
+            expected,
+            bos_token=bos_token,
+            bow_correction=True,
+            reduction=lambda x: -x.sum().item(),
         )
         within_scores = lm.conditional_score(
             prefix,
             within_category,
             bos_token=bos_token,
-            reduction=lambda x: x.sum().item(),
+            bow_correction=True,
+            reduction=lambda x: -x.sum().item(),
         )
         between_scores = lm.conditional_score(
             prefix,
             between_category,
             bos_token=bos_token,
-            reduction=lambda x: x.sum().item(),
+            bow_correction=True,
+            reduction=lambda x: -x.sum().item(),
         )
 
         for i, entropy, e, w, b in zip(
