@@ -1,7 +1,7 @@
 ---
 title: "Analysing language models' behavior on Federmeier and Kutas (1999)"
 description: |
-  HSP virtual speaker series.
+  A demo for the HSP online speaker series, organized by Yuhan Zhang!
 author:
   - name: Kanishka Misra 
     url: https://kanishka.website
@@ -16,6 +16,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+**Note:** If you run this on RStudio, please change your Rmarkdown settings to evaluate chunks in the Project and not the Directory of this file. Without that, the chunks that involve reading of files will not work.
 
 ## Importing libraries
 
@@ -103,7 +105,7 @@ model_meta <- model_meta %>%
 
 ### How often do the tested LMs show compatibility with the findings of F&K (1999)?
 
-Federmeier and Kutas (1999) found the N400 patterns to show some sensitivity to the completions which were not expected, but shared a semantic category with the actual expected completion. In their findings, the **expected** continuation did not elicit an N400 effect, while the **between** continuation did, in line with what was known about the N400. At the same time, while the **within** continuation---which shared many semantic features with the expected word---also elicited an N400 in participants, its amplitude was systematically moderate compared that of **between**. This suggested that the N400.
+Federmeier and Kutas (1999) found the N400 patterns to show some sensitivity to the completions which were not expected, but shared a semantic category with the actual expected completion. In their findings, the **expected** continuation did not elicit an N400 effect, while the **between** continuation did, in line with what was known about the N400. At the same time, while the **within** category violation---which shared many semantic features with the expected word---also elicited an N400 in participants, its amplitude was systematically moderate compared that of **between**. This suggested that the N400 might be sensitive to the structure of long-term semantic memory.
 
 Insofar as the surprisal tracks similar information as the N400, we should see the following pattern emerge:
 
@@ -153,7 +155,7 @@ results %>%
 
 We can also look at it from the perspective of average surprisal values across completion types, across models
 
-```{r, fig.height=10.24, fig.width=8.83}
+```{r, fig.height=11, fig.width=8.83}
 results_wider <- results %>%
   pivot_longer(expected_surprisal:between_surprisal, names_to = "completion", values_to = "surprisal") %>%
   mutate(
@@ -202,7 +204,7 @@ results_wider %>%
   facet_wrap(~family, ncol = 1, scales="free") +
   theme_bw(base_size = 16, base_family = "Times") +
   theme(
-    legend.position = "none",
+    legend.position = "top",
     panel.grid = element_blank(),
     axis.text = element_text(color = "black")
   ) +
@@ -248,6 +250,11 @@ results_wider %>%
   )
 ```
 
+Even if there end up being globally significant differences between within category violations for high and low constraint contexts, the visual analysis suggests that expected and between-category violations also seem to show significant effects of constraint, contrary to the no-effect finding in Federmeier and Kutas (1999).
+
+If true (have to run `lmer` models to find out), then this would suggest that the patterning of LM surprisal with the N400 wrt contextual constraints is relatively weak. **And so perhaps unsurprisingly, surprisal alone might not be enough to account for the precise/nuanced effect of semantic organization on sentence processing.** You could potentially include a separate variable that computes the taxonomically-sensitive conceptual similarity between the expected and the unexpected items to account for this effect, if you are doing computational modeling.
+
+---
 
 Distill is a publication format for scientific and technical writing, native to the web.
 

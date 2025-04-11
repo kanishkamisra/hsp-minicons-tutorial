@@ -1,5 +1,6 @@
 library(tidyverse)
 
+# reads the stimuli and cleans it for one case where my data cleaning backfired
 fk1999 <- read_csv("data/fk1999-stimuli.csv") %>%
   mutate(
     prefix = case_when(
